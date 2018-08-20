@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // GTM Page view tracking
+      document.addEventListener('turbolinks:load', function(event) {
+        var url = event.data.url;
+        dataLayer.push({
+          'event':'pageView',
+          'virtualUrl': url,
+          'virtualTitle': '{{title}}',
+          'nonInteraction': 1
+        });
+      });
+      // GTM SCRIPT
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',/** GTM CODE HERE**/'');  //@TODO:: Move gtm code to .env
+    </script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="turbolinks-cache-control" content="no-cache">
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="shortcut icon" href="">
+    <!-- Asset Preloads preloads -->
+    <!-- <link rel="preload" href="/fonts/font.woff" as="font"> -->
+    <link rel="preload" href="/stylesheets/bundle.min.css" as="style">
+    <link rel="preload" href="/javascripts/libraries{{#if isProduction}}.min{{/if}}.js" as="script">    
+    <!-- Global appData -->
+    <!-- 
+    <script type="text/javascript">
+      window.appData = {{{stringify appData}}};
+    </script>
+    -->
+    <!-- Client scripts -->
+    <link rel='stylesheet' href='/stylesheets/bundle.min.css'>
+    <script type="text/javascript" src="/javascripts/libraries{{#if isProduction}}.min{{/if}}.js" defer></script>
+    <script type="text/javascript" src="/javascripts/main{{#if isProduction}}.min{{/if}}.js" defer></script>
+    <script type="text/javascript" src="/javascripts/templates{{#if isProduction}}.min{{/if}}.js" defer></script>
+  </head>
+  <body id="{{controller}}-route" class="w-100">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2F6MXS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    {{> header}}
+    {{{body}}}  
+    {{> footer}}
+
+    {{#each scripts as |script|}}
+      <script type="type/javascript" src="/javascripts/{{script}}" defer></script>
+    {{/each}}
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-24736912-1');
+    </script>
+  </body>
+</html>
