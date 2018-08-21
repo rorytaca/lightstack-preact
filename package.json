@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "postinstall": "gulp gulp --env production default",
-    "dev": "gulp --env development dev"
+    "dev": "gulp --env production dev"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",

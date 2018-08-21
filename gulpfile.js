@@ -101,29 +101,47 @@ gulp.task('js-main', () => {
 //     })))
 //     .pipe(gulp.dest('public/javascripts'));
 // });
+gulp.task('js-components', () => {
+  return gulp.src([
+    'frontend/javascripts/components/*.js'
+  ])
+    .pipe(errorHandler(logError))
+    .pipe(bro({
+      insertGlobals: true,
+      transform: [
+        babelify.configure({
+          presets: ['env'],
+        }),
+      ],
+    }))
+    .pipe(ifEnv.not('development', minify({
+      ext: {
+        min: '.js'
+      },
+    })))
+    .pipe(gulp.dest('public/javascripts/components/'));
+});
 
-// gulp.task('js-controllers', () => {
-//   return gulp.src([
-//     'frontend/javascripts/components/*.js', 
-//     'frontend/javascripts/controllers/*.js'
-//   ])
-//     .pipe(errorHandler(logError))
-//     .pipe(bro({
-//       insertGlobals: true,
-//       transform: [
-//         babelify.configure({
-//           presets: ['env'],
-//         }),
-//       ],
-//     }))
-//     .pipe(concat('controllers.js'))
-//     .pipe(ifEnv.not('development', minify({
-//       ext: {
-//         min: '.min.js'
-//       },
-//     })))
-//     .pipe(gulp.dest('public/javascripts'));
-// });
+gulp.task('js-controllers', () => {
+  return gulp.src([
+    'frontend/javascripts/controllers/*.js'
+  ])
+    .pipe(errorHandler(logError))
+    .pipe(bro({
+      insertGlobals: true,
+      transform: [
+        babelify.configure({
+          presets: ['env'],
+        }),
+      ],
+    }))
+    .pipe(ifEnv.not('development', minify({
+      ext: {
+        min: '.js'
+      },
+    })))
+    .pipe(gulp.dest('public/javascripts/controllers/'));
+});
 
 gulp.task('css', () => {
   return gulp.src('frontend/stylesheets/main.scss')
@@ -137,7 +155,7 @@ gulp.task('css', () => {
 });
 
 // gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'jsx-preact', 'js-controllers', 'css'));
-gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'css'));
+gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'js-controllers', 'js-components', 'css'));
 
 gulp.task('watch', () => {
   livereload.listen();

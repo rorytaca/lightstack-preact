@@ -11,7 +11,8 @@ const hbs = require('hbs');
 const hbsutils = require('hbs-utils')(hbs);
 const hbsHelpers = require('./utils/hbs-helpers');
 
-const indexRouter = require('./routes/index');
+const globalData = require('./utils/global-data.js');
+const index = require('./routes/index');
 
 const app = express();
 
@@ -42,7 +43,12 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+
+//api routes before global data
+//global data
+app.use('/', globalData);
+//content routes after global data
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
