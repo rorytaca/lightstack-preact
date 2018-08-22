@@ -13,6 +13,7 @@ const hbsHelpers = require('./utils/hbs-helpers');
 
 const globalData = require('./utils/global-data.js');
 const index = require('./routes/index');
+const airtable = require('./routes/airtable');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //api routes before global data
+app.use('/airtable', airtable);
 //global data
 app.use('/', globalData);
 //content routes after global data
