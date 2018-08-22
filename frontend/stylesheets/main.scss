@@ -1,6 +1,9 @@
 /* libs */
 @import 'lib/tachyons-4.8.0.min.css';
+@import 'lib/mapbox-gl.css';
 
 /* utils */
 @import 'utils/breakpoints';
 
+/* components */
+@import 'components/storeLocator';

@@ -41,6 +41,9 @@
     <script type="text/javascript" src="/javascripts/libraries{{#if isProduction}}.min{{/if}}.js" defer></script>
     <script type="text/javascript" src="/javascripts/main{{#if isProduction}}.min{{/if}}.js" defer></script>
     <script type="text/javascript" src="/javascripts/templates{{#if isProduction}}.min{{/if}}.js" defer></script>
+    
+    <link rel="preload" href="/javascripts/preact-components{{#if isProduction}}.min{{/if}}.js" as="script">
+    <script type="text/javascript" src="/javascripts/preact-components{{#if isProduction}}.min{{/if}}.js" defer></script>
   </head>
   <body id="{{controller}}-route" class="w-100">
     <!-- Google Tag Manager (noscript) -->
