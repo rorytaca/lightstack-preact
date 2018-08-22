@@ -76,31 +76,32 @@ gulp.task('js-main', () => {
     .pipe(gulp.dest('public/javascripts'));
 });
 
-// gulp.task('jsx-preact', () => {
-//   return gulp.src([
-//     'frontend/jsx/**/*.jsx'
-//   ])
-//     .pipe(errorHandler(logError))
-//     .pipe(bro({
-//       insertGlobals: true,
-//       transform: [
-//         babelify.configure({
-//           presets: ['react', 'env'],
-//           plugins: [
-//             ['transform-react-jsx', {'pragma':'h'}],
-//             ['transform-object-rest-spread']
-//           ],
-//         }),
-//       ],
-//     }))
-//     .pipe(concat('preact-components.js'))
-//     .pipe(ifEnv.not('development', minify({
-//       ext: {
-//         min: '.min.js'
-//       },
-//     })))
-//     .pipe(gulp.dest('public/javascripts'));
-// });
+gulp.task('jsx-preact', () => {
+  return gulp.src([
+    'frontend/jsx/**/*.jsx'
+  ])
+    .pipe(errorHandler(logError))
+    .pipe(bro({
+      insertGlobals: true,
+      transform: [
+        babelify.configure({
+          presets: ['react', 'env'],
+          plugins: [
+            ['transform-react-jsx', {'pragma':'h'}],
+            ['transform-object-rest-spread']
+          ],
+        }),
+      ],
+    }))
+    .pipe(concat('preact-components.js'))
+    .pipe(ifEnv.not('development', minify({
+      ext: {
+        min: '.min.js'
+      },
+    })))
+    .pipe(gulp.dest('public/javascripts'));
+});
+
 gulp.task('js-components', () => {
   return gulp.src([
     'frontend/javascripts/components/*.js'
@@ -154,8 +155,7 @@ gulp.task('css', () => {
     .pipe(gulp.dest('public/stylesheets'));
 });
 
-// gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'jsx-preact', 'js-controllers', 'css'));
-gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'js-controllers', 'js-components', 'css'));
+gulp.task('build', gulpSequence('js-libraries', 'component-templates', 'js-main', 'js-controllers', 'jsx-preact', 'js-components', 'css'));
 
 gulp.task('watch', () => {
   livereload.listen();
@@ -192,11 +192,11 @@ gulp.task('watch', () => {
     });
   });
   
-  // gulp.watch(['frontend/jsx/**/*.jsx'], (event) => {
-  //   gulpSequence('jsx-preact')((err) => {
-  //     if (err) console.error(err)
-  //   });
-  // });
+  gulp.watch(['frontend/jsx/**/*.jsx'], (event) => {
+    gulpSequence('jsx-preact')((err) => {
+      if (err) console.error(err)
+    });
+  });
 });
 
 gulp.task('serve', () => {
