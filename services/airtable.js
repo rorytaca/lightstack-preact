@@ -1,4 +1,3 @@
-const axios = require('axios');
 const Airtable = require('airtable');
 const MapboxClient = require('mapbox');
 const mapbox = new MapboxClient('pk.eyJ1IjoiaW5kaWVsZWUiLCJhIjoiY2pqNGVsdjlzMTY5MjNwcGNvdWQxYXlydSJ9.XiSB6XHZULnIAKVRDyPTuQ');
